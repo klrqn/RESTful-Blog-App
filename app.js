@@ -1,7 +1,7 @@
-var bodyParser  = require("body-parser"),
-express         = require("express"),
-mongoose        = require("mongoose"),
-app             = express();
+var bodyParser  = require("body-parser");
+var express     = require("express");
+var app         = express();
+var mongoose    = require("mongoose");
 
 // APP CONFIG
 mongoose.connect("mongodb://localhost/restful_blog_app", {useMongoClient: true});
@@ -34,6 +34,25 @@ app.get("/blogs", function(req, res){
         }
     });
 });
+
+// NEW ROUTE
+app.get("/blogs/new", function(req, res){
+    res.render("new");
+});
+
+// CREATE ROUTE
+app.post("/blogs", function(req, res){
+    // Create Blog
+    Blog.create(req.body.blog, function(err, newBlog){
+        if(err){
+            console.log("Error Creating New Blog Post: \n");
+            res.render("new");
+        } else {
+            res.redirect("/");
+        }
+    });
+});
+
 
 
 app.listen(process.env.PORT, process.env.IP, function(){
