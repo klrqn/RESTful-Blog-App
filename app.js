@@ -20,8 +20,20 @@ var blogSchema = new mongoose.Schema({
 var Blog = mongoose.model("Blog", blogSchema);
 
 // RESTFUL ROUTES
+app.get("/", function(req, res){
+    res.redirect("/blogs");
+});
 
-
+// INDEX
+app.get("/blogs", function(req, res){
+    Blog.find({}, function(err, blogs){
+        if(err){
+            console.log("there was an error: \n");
+        } else { 
+            res.render("index", {blogs: blogs});
+        }
+    });
+});
 
 
 app.listen(process.env.PORT, process.env.IP, function(){
