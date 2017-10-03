@@ -5,7 +5,10 @@
         <a href="blogs/<%=blog.id%>"><h2><%=blog.title%></h2></a>
         <img class="img_index" src="<%=blog.image%>">
         <!--<span><%=blog.created%></span>-->
-        <p><%-blog.body.substring(0,100)%> ...</p>
+        <p><%-blog.body.substring(0,100)%> ...
+        <!--<span><form action="/blogs/<%=blog.id%>?_method=DELETE" method="POST">-->
+        <!--    <button class="ui red basic small button">Delete</button>-->
+        <!--</form></span></p>-->
     </div>
 <% }); %>
 
