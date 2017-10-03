@@ -2,7 +2,8 @@ var bodyParser  = require("body-parser");
 var express     = require("express");
 var app         = express();
 var mongoose    = require("mongoose"),
-    methodOverride = require("method-override");
+    methodOverride = require("method-override"),
+    expressSanitizer = require("express-sanitizer");
 
 // APP CONFIG
 mongoose.connect("mongodb://localhost/restful_blog_app", {useMongoClient: true});
@@ -11,6 +12,7 @@ mongoose.Promise = global.Promise;
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static("public")); //css
 app.use(methodOverride("_method"));
+app.use(expressSanitizer());
 
 // MOMGOOSE/MODEL CONFIG
 var blogSchema = new mongoose.Schema({
@@ -46,6 +48,7 @@ app.get("/blogs/new", function(req, res){
 app.post("/blogs", function(req, res){
     // Create Blog
     Blog.create(req.body.blog, function(err, newBlog){
+        req.body.blog.body = req.sanitizer(req.body.blog.body);
         if(err){
             console.log("Error Creating New Blog Post: \n");
             res.render("new");
