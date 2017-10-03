@@ -2,7 +2,7 @@
 
 <% blogs.forEach(function(blog){ %>
     <div class="postsIndex">
-        <a href="blogs/<%=blog._id%>"><h2><%=blog.title%></h2></a>
+        <a href="blogs/<%=blog.id%>"><h2><%=blog.title%></h2></a>
         <img class="img_index" src="<%=blog.image%>">
         <!--<span><%=blog.created%></span>-->
         <p><%-blog.body.substring(0,100)%> ...</p>
